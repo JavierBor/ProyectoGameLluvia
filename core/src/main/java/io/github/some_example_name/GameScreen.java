@@ -69,7 +69,7 @@ public class GameScreen implements Screen {
 			// caida de la lluvia 
 	       if (!lluvia.actualizarMovimiento(tarro)) {
 	    	  //actualizar HigherScore
-	    	  if (game.getHigherScore()<tarro.getPuntos())
+	    	  if (game.getHigherScore() < tarro.getPuntos())
 	    		  game.setHigherScore(tarro.getPuntos());  
 	    	  //ir a la ventana de finde juego y destruir la actual
 	    	  game.setScreen(new GameOverScreen(game));

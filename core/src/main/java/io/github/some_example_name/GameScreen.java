@@ -27,16 +27,17 @@ public class GameScreen implements Screen {
         this.font = game.getFont();
 		  // load the images for the droplet and the bucket, 64x64 pixels each 	     
 		  Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
-		  tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound);
+		  tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound, new Texture(Gdx.files.internal("bucketGold.png")));
          
 	      // load the drop sound effect and the rain background "music" 
          Texture gota = new Texture(Gdx.files.internal("drop.png"));
          Texture gotaMala = new Texture(Gdx.files.internal("dropBad.png"));
+         Texture rayo = new Texture(Gdx.files.internal("rayo.png"));
          
          Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
         
 	     Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-         lluvia = new Lluvia(gota, gotaMala, dropSound, rainMusic);
+         lluvia = new Lluvia(gota, gotaMala, dropSound, rainMusic, rayo);
 	      
 	      // camera
 	      camera = new OrthographicCamera();
@@ -79,9 +80,10 @@ public class GameScreen implements Screen {
 		
 		tarro.dibujar(batch);
 		lluvia.actualizarDibujoLluvia(batch);
+		lluvia.actualizarDibujoElementos(batch);
 		
 		batch.end();
-	}
+	} 
 
 	@Override
 	public void resize(int width, int height) {

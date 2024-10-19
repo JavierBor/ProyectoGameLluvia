@@ -14,6 +14,7 @@ public class Tarro {
 	   private Texture bucketImage;
 	   private Texture bucketGold;
 	   private Sound sonidoHerido;
+	    private Sound powerSound;
 	   private int vidas = 3;
 	   private int puntos = 0;
 	   private int velx = 500;
@@ -24,10 +25,11 @@ public class Tarro {
 	   private float tiempoInmunidad;
 	   
 	   
-	   public Tarro(Texture tex, Sound ss, Texture gold) {
+	   public Tarro(Texture tex, Sound ss, Texture gold, Sound power) {
 		   bucketImage = tex;
 		   sonidoHerido = ss;
 		   bucketGold = gold;
+		   powerSound = power;
 	   }
 	   
 		public int getVidas() {
@@ -64,9 +66,12 @@ public class Tarro {
 		   vidas++;
 	   }
 	   
-	   public void otorgarInmunidad(float segundos) {
-	        inmunidad = true;
-	        tiempoInmunidad = segundos;
+	   public void otorgarInmunidad(float segundos) {	 
+		   puntos+=50;
+	       tiempoInmunidad = segundos;
+	       powerSound.stop(); //Evitamos que se acumulen
+	       powerSound.play();
+	       inmunidad = true;
 	    }
 	   
 	   public void dibujar(SpriteBatch batch) {
@@ -74,7 +79,8 @@ public class Tarro {
 	       if (inmunidad) {
 	           tiempoInmunidad -= Gdx.graphics.getDeltaTime(); 
 	           if (tiempoInmunidad <= 0) {
-	               inmunidad = false; 
+	               inmunidad = false;
+	               powerSound.stop();
 	           }
 	           batch.draw(bucketGold, bucket.x, bucket.y);
 	       }
@@ -111,10 +117,14 @@ public class Tarro {
 			
 	   }
 	    
+	   
+	   public boolean esInmune() {
+		   return inmunidad;
+	   }
 
-		public void destruir() {
-			    bucketImage.dispose();
-		   }
+	   public void destruir() {
+		   bucketImage.dispose();
+	   }
 	
 	   public boolean estaHerido() {
 		   return herido;

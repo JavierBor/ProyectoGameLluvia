@@ -27,17 +27,16 @@ public class GameScreen implements Screen {
         this.font = game.getFont();
 		  // load the images for the droplet and the bucket, 64x64 pixels each 	     
 		  Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
-		  tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound, new Texture(Gdx.files.internal("bucketGold.png")));
+		  Sound powerSound = Gdx.audio.newSound(Gdx.files.internal("powerSound.mp3")); 
+		  tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound, new Texture(Gdx.files.internal("bucketGold.png")), powerSound);
          
 	      // load the drop sound effect and the rain background "music" 
          Texture gota = new Texture(Gdx.files.internal("drop.png"));
          Texture gotaMala = new Texture(Gdx.files.internal("dropBad.png"));
-         Texture rayo = new Texture(Gdx.files.internal("rayo.png"));
          
-         Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-        
+         Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav")); 
 	     Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-         lluvia = new Lluvia(gota, gotaMala, dropSound, rainMusic, rayo);
+         lluvia = new Lluvia(gota, gotaMala, dropSound, rainMusic);
 	      
 	      // camera
 	      camera = new OrthographicCamera();

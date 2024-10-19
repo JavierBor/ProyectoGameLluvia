@@ -17,16 +17,14 @@ public class Lluvia {
     private long lastDropTime;
     private Texture gotaBuena;
     private Texture gotaMala;
-    private Texture textRayo;
     private Sound dropSound;
     private Music rainMusic;
 	   
-	public Lluvia(Texture gotaBuena, Texture gotaMala, Sound ss, Music mm, Texture textRayo) {
+	public Lluvia(Texture gotaBuena, Texture gotaMala, Sound ss, Music mm) {
 		rainMusic = mm;
 		dropSound = ss;
 		this.gotaBuena = gotaBuena;
 		this.gotaMala = gotaMala;
-		this.textRayo = textRayo;
 	}
 	
 	public void crear() {
@@ -36,6 +34,7 @@ public class Lluvia {
 		crearGotaDeLluvia();
 	      // start the playback of the background music immediately
 	      rainMusic.setLooping(true);
+	      rainMusic.setVolume(0.25f);
 	      rainMusic.play();
 	}
 	
@@ -59,7 +58,7 @@ public class Lluvia {
 	
 	private void crearElemento() {
 		int probabilidad = MathUtils.random(1, 100);
-		if (probabilidad <= 5) {
+		if (probabilidad <= 3) {
 			Rayo rayo = new Rayo(MathUtils.random(0, 800-64), 480, 64, 64);
 			elementosPos.add(rayo);
 		}
@@ -85,7 +84,10 @@ public class Lluvia {
 	      if(raindrop.overlaps(tarro.getArea())) {
 	    	  //la gota choca con el tarro
 	    	  if(rainDropsType.get(i)==1) { // gota dañina
-	    	      tarro.dañar();
+	    	      if (tarro.esInmune()) {
+	    	    	  tarro.sumarPuntos(5);
+	    	      }
+	    		  tarro.dañar();
 	    	      if (tarro.getVidas()<=0)
 	    		     return false; // si se queda sin vidas retorna falso /game over
 	    	      rainDropsPos.removeIndex(i);
@@ -93,7 +95,7 @@ public class Lluvia {
 	      	  } 
 	    	  else if (rainDropsType.get(i)==2) { // gota a recolectar
 	    	      tarro.sumarPuntos(10);
-	              dropSound.play();
+	              dropSound.setVolume(dropSound.play(), 0.5f);
 	              rainDropsPos.removeIndex(i);
 	              rainDropsType.removeIndex(i);
 	      	  }       		
@@ -111,10 +113,10 @@ public class Lluvia {
 
 		    if (elemento.colision(tarro)) {
 		        if (elemento instanceof Rayo) {
-		            tarro.otorgarInmunidad(5);  //Aplica inmunidad
+		            elemento.aplicarEfecto(tarro);  //Aplica inmunidad	            
 		        } 
 		        /*else if (elemento instanceof Arcoiris) {
-		            tarro.sumarVida();  //Añade una vida
+		            elemento.aplicarEfecto(tarro);  //Añade una vida
 		        }*/
 		        elementosPos.removeIndex(i);
 		    }
@@ -124,7 +126,7 @@ public class Lluvia {
    
    public void actualizarDibujoElementos(SpriteBatch batch) {    
 	    for (Elemento elemento : elementosPos) {
-	        elemento.dibujar(batch);  // Asegúrate de tener un método de dibujo en la clase Elemento
+	        elemento.dibujar(batch);
 	    }
 	}
    

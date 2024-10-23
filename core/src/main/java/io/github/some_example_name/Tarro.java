@@ -1,5 +1,4 @@
 package io.github.some_example_name;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
@@ -8,13 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
-
 public class Tarro {
 	   private Rectangle bucket;
 	   private Texture bucketImage;
 	   private Texture bucketGold;
 	   private Sound sonidoHerido;
-	    private Sound powerSound;
+	   private Sound powerSound;
+	   private Sound vidaSound;
 	   private int vidas = 3;
 	   private int puntos = 0;
 	   private int velx = 500;
@@ -25,11 +24,12 @@ public class Tarro {
 	   private float tiempoInmunidad;
 	   
 	   
-	   public Tarro(Texture tex, Sound ss, Texture gold, Sound power) {
+	   public Tarro(Texture tex, Sound ss, Texture gold, Sound power, Sound vidaMas) {
 		   bucketImage = tex;
 		   sonidoHerido = ss;
 		   bucketGold = gold;
 		   powerSound = power;
+		   vidaSound = vidaMas;
 	   }
 	   
 		public int getVidas() {
@@ -63,16 +63,18 @@ public class Tarro {
 	   }
 	   
 	   public void aumentarVida() {
+		   puntos+=100;
+		   vidaSound.play();
 		   vidas++;
 	   }
 	   
 	   public void otorgarInmunidad(float segundos) {	 
-		   puntos+=50;
+		   puntos+=25;
 	       tiempoInmunidad = segundos;
 	       powerSound.stop(); //Evitamos que se acumulen
 	       powerSound.play();
 	       inmunidad = true;
-	    }
+	   }
 	   
 	   public void dibujar(SpriteBatch batch) {
 		   //Manejo de inmunidad
@@ -99,25 +101,21 @@ public class Tarro {
 	   
 	   
 	   public void actualizarMovimiento() { 
-		   // movimiento desde mouse/touch
-		   /*if(Gdx.input.isTouched()) {
-			      Vector3 touchPos = new Vector3();
-			      touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			      camera.unproject(touchPos);
-			      bucket.x = touchPos.x - 64 / 2;
-			}*/
-		   //movimiento desde teclado
+		   //Movimiento desde teclado (Arriba, abajo, izq, der)
 		   if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) bucket.x -= velx * Gdx.graphics.getDeltaTime();
 		   if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) bucket.x += velx * Gdx.graphics.getDeltaTime();
-		   // que no se salga de los bordes izq y der
-		   if(bucket.x < 0) bucket.x = 0;
-		   if(bucket.x > 800 - 64) bucket.x = 800 - 64;
+		   if(Gdx.input.isKeyPressed(Input.Keys.UP)) bucket.y += velx * Gdx.graphics.getDeltaTime();
+		   if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) bucket.y -= velx * Gdx.graphics.getDeltaTime();
 		   
+		   //Para evitar que no salga por arriba o abajo
+		   if(bucket.y < 0) bucket.y = 0;
+		   if(bucket.y > 480 - 64) bucket.y = 480 - 64;
 		   
-			
+		   //Al salir por un lado, aparece por el otro
+		   if(bucket.x < -64) bucket.x = 800; 
+		   if(bucket.x > 800) bucket.x = -64; 
 	   }
-	    
-	   
+	    	   
 	   public boolean esInmune() {
 		   return inmunidad;
 	   }
@@ -129,7 +127,4 @@ public class Tarro {
 	   public boolean estaHerido() {
 		   return herido;
 	   }
-	   
-	   
-	   
 }

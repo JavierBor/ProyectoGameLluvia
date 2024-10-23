@@ -47,7 +47,7 @@ public class Lluvia {
 		rainDropsPos.add(raindrop);
 		
 		//Ver el tipo de gota (buena o mala)
-	    if (MathUtils.random(1, 10) < 5) {
+	    if (MathUtils.random(1, 10) < 4) {
 	        rainDropsType.add(1);  //1 para gota dañina
 	    } else {
 	        rainDropsType.add(2);  //2 para gota buena
@@ -57,12 +57,16 @@ public class Lluvia {
 	}
 	
 	private void crearElemento() {
-		int probabilidad = MathUtils.random(1, 100);
-		if (probabilidad <= 3) {
+		double probabilidad = MathUtils.random(0f, 100f);
+		if (probabilidad <= 1) { //Probabilidad del 1%
 			Rayo rayo = new Rayo(MathUtils.random(0, 800-64), 480, 64, 64);
 			elementosPos.add(rayo);
 		}
-		else {
+		else if (probabilidad > 1 && probabilidad <= 1.5) { //Probabilidad del 0,5%
+			Sol sol = new Sol(MathUtils.random(0, 800-64), 480, 64, 64);
+			elementosPos.add(sol);
+		}
+		else { //Resto de probabilidades (Gotas normales)
 			crearGotaDeLluvia();
 		}
 	}
@@ -111,13 +115,8 @@ public class Lluvia {
 		        continue;
 		    }
 
-		    if (elemento.colision(tarro)) {
-		        if (elemento instanceof Rayo) {
-		            elemento.aplicarEfecto(tarro);  //Aplica inmunidad	            
-		        } 
-		        /*else if (elemento instanceof Arcoiris) {
-		            elemento.aplicarEfecto(tarro);  //Añade una vida
-		        }*/
+		    if (elemento.colision(tarro)) { //Aplicamos el efecto del elemento       
+	            elemento.aplicarEfecto(tarro); //Se aplicará el efecto automaticamente      
 		        elementosPos.removeIndex(i);
 		    }
 	   }

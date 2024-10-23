@@ -1,6 +1,7 @@
 package io.github.some_example_name;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -18,9 +19,6 @@ public class GameScreen implements Screen {
 	private Tarro tarro;
 	private Lluvia lluvia;
 
-	   
-	//boolean activo = true;
-
 	public GameScreen(final GameLluviaMenu game) {
 		this.game = game;
         this.batch = game.getBatch();
@@ -28,7 +26,8 @@ public class GameScreen implements Screen {
 		  // load the images for the droplet and the bucket, 64x64 pixels each 	     
 		  Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 		  Sound powerSound = Gdx.audio.newSound(Gdx.files.internal("powerSound.mp3")); 
-		  tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound, new Texture(Gdx.files.internal("bucketGold.png")), powerSound);
+		  Sound vidaSound = Gdx.audio.newSound(Gdx.files.internal("vidaSound.mp3")); 
+		  tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound, new Texture(Gdx.files.internal("bucketGold.png")), powerSound, vidaSound);
          
 	      // load the drop sound effect and the rain background "music" 
          Texture gota = new Texture(Gdx.files.internal("drop.png"));
@@ -57,6 +56,16 @@ public class GameScreen implements Screen {
 		camera.update();
 		//actualizar 
 		batch.setProjectionMatrix(camera.combined);
+		
+		
+		//Detectar si se presiona la tecla de pausa
+		
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+        	this.pause();
+        }
+        
+      
+        
 		batch.begin();
 		//dibujar textos
 		font.draw(batch, "Gotas totales: " + tarro.getPuntos(), 5, 475);
@@ -80,17 +89,16 @@ public class GameScreen implements Screen {
 		tarro.dibujar(batch);
 		lluvia.actualizarDibujoLluvia(batch);
 		lluvia.actualizarDibujoElementos(batch);
-		
 		batch.end();
 	} 
 
 	@Override
 	public void resize(int width, int height) {
+		
 	}
 
 	@Override
 	public void show() {
-	  // continuar con sonido de lluvia
 	  lluvia.continuar();
 	}
 

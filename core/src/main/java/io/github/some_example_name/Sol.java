@@ -2,44 +2,46 @@ package io.github.some_example_name;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.MathUtils;
 
-public class Sol implements Elemento{
-	private Rectangle area; 
-    private Texture textura;
-
+public class Sol extends Elemento{
+    private float direccion = 1; // 1 para derecha, -1 para izquierda
+    private float limiteIzquierda; //Límite izquierdo
+    private float limiteDerecha; //Límite derecho
+    private float contadorCambio;
+    private float tiempoCambio;
+	
     public Sol(float x, float y, float ancho, float alto) {
-        this.area = new Rectangle(x, y, ancho, alto);
-        this.textura = new Texture(Gdx.files.internal("sol.png"));
-    }
-    
-    public Rectangle getArea() {
-        return area; //Obtener su area
+        super(x, y, ancho, alto, new Texture(Gdx.files.internal("sol.png")));
+        limiteIzquierda = 0;
+        limiteDerecha = 800 - 50;
+        contadorCambio = 0;
+        tiempoCambio = MathUtils.random(1, 3);
     }
     
     @Override
-	public void mover(float deltaTime) {
-		area.y -= 300 * deltaTime;		
-	}
-    
-	@Override
-	public void aplicarEfecto(Tarro tarro) {
-		tarro.aumentarVida();		
-	}
+    public void mover(float deltaTime) {
+    	
+    	//Mover el sol en eje x con distintas velocidades
+        getArea().x += MathUtils.random(100, 450) * direccion * deltaTime;
+        //Mover el del en eje y con velocidad fija
+        getArea().y -= 350 * deltaTime;
 
-	@Override
-    public boolean fueraPantalla() {
-    	return area.y + area.height < 0; //Verificar si salió de la pantalla
+        //Aumentar el contador de tiempo
+        contadorCambio += deltaTime;
+
+        //Cambiar dirección después de cierto tiempo
+        if (contadorCambio >= tiempoCambio) {
+            direccion *= -1; //Cambiar la dirección
+            contadorCambio = 0; 
+            tiempoCambio = MathUtils.random(1, 3);
+        }
+
+        //Cambiar dirección si alcanza los límites laterales
+        if (getArea().x <= limiteIzquierda) {
+            direccion = 1;
+        } else if (getArea().x >= limiteDerecha) {
+            direccion = -1;
+        }
     }
-
-	@Override
-	public boolean colision(Tarro tarro) {
-		return area.overlaps(tarro.getArea()); //Verificar si chocó con el tarro
-	}
-
-	@Override
-	public void dibujar(SpriteBatch batch) {
-		batch.draw(textura, area.x, area.y); //Actualizar su sprite
-	}
 }

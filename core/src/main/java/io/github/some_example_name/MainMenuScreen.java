@@ -32,8 +32,8 @@ public class MainMenuScreen implements Screen {
 
 		batch.begin();
 		font.getData().setScale(2, 2);
-		font.draw(batch, "Bienvenido a Recolecta Gotas!!! ", 100, camera.viewportHeight/2+50);
-		font.draw(batch, "Toca en cualquier lugar para comenzar!", 100, camera.viewportHeight/2-50);
+		font.draw(batch, "¡Bienvenido a Recolecta Gotas! ", 195, 275);
+		font.draw(batch, "Toca en cualquier lugar para comenzar.", 140, 225);
 
 		batch.end();
 

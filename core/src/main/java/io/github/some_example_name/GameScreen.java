@@ -20,32 +20,31 @@ public class GameScreen implements Screen {
 	private Lluvia lluvia;
 
 	public GameScreen(final GameLluviaMenu game) {
+		
 		this.game = game;
         this.batch = game.getBatch();
         this.font = game.getFont();
-		  // load the images for the droplet and the bucket, 64x64 pixels each 	     
-		  Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
-		  Sound powerSound = Gdx.audio.newSound(Gdx.files.internal("powerSound.mp3")); 
-		  Sound vidaSound = Gdx.audio.newSound(Gdx.files.internal("vidaSound.mp3")); 
-		  tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound, new Texture(Gdx.files.internal("bucketGold.png")), powerSound, vidaSound);
+		// load the images for the droplet and the bucket, 64x64 pixels each 	     
+		Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
+		Sound powerSound = Gdx.audio.newSound(Gdx.files.internal("powerSound.mp3")); 
+		Sound vidaSound = Gdx.audio.newSound(Gdx.files.internal("vidaSound.mp3")); 
+		tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound, new Texture(Gdx.files.internal("bucketGold.png")), powerSound, vidaSound);
          
-	      // load the drop sound effect and the rain background "music" 
-         Texture gota = new Texture(Gdx.files.internal("drop.png"));
-         Texture gotaMala = new Texture(Gdx.files.internal("dropBad.png"));
+
          
-         Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav")); 
-	     Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-         lluvia = new Lluvia(gota, gotaMala, dropSound, rainMusic);
+        Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav")); 
+	    Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+        lluvia = new Lluvia(dropSound, rainMusic);
 	      
-	      // camera
-	      camera = new OrthographicCamera();
-	      camera.setToOrtho(false, 800, 480);
-	      batch = new SpriteBatch();
-	      // creacion del tarro
-	      tarro.crear();
-	      
-	      // creacion de la lluvia
-	      lluvia.crear();
+	    // camera
+	    camera = new OrthographicCamera();
+	    camera.setToOrtho(false, 800, 480);
+	    batch = new SpriteBatch();
+	    // creacion del tarro
+	    tarro.crear();
+	     
+	    // creacion de la lluvia
+	    lluvia.crear();
 	}
 
 	@Override
@@ -57,20 +56,16 @@ public class GameScreen implements Screen {
 		//actualizar 
 		batch.setProjectionMatrix(camera.combined);
 		
-		
-		//Detectar si se presiona la tecla de pausa
-		
+		//Detectar si se presiona la tecla de pausa	'P'
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
         	this.pause();
         }
-        
-      
-        
+          
 		batch.begin();
-		//dibujar textos
-		font.draw(batch, "Gotas totales: " + tarro.getPuntos(), 5, 475);
-		font.draw(batch, "Vidas : " + tarro.getVidas(), 670, 475);
-		font.draw(batch, "HighScore : " + game.getHigherScore(), camera.viewportWidth/2-50, 475);
+		//Textos mostrados en pantalla
+		font.draw(batch, "Puntaje Actual: " + tarro.getPuntos(), 5, 475);
+		font.draw(batch, "Vidas: " + tarro.getVidas(), 5, 445);
+		font.draw(batch, "HighScore: " + game.getHigherScore(), 550, 475);
 		
 		if (!tarro.estaHerido()) {
 			// movimiento del tarro desde teclado
@@ -87,7 +82,6 @@ public class GameScreen implements Screen {
 		}
 		
 		tarro.dibujar(batch);
-		lluvia.actualizarDibujoLluvia(batch);
 		lluvia.actualizarDibujoElementos(batch);
 		batch.end();
 	} 

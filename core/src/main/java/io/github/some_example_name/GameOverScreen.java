@@ -28,8 +28,8 @@ public class GameOverScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
-		font.draw(batch, "GAME OVER ", 100, 200);
-		font.draw(batch, "Toca en cualquier lado para reiniciar.", 100, 100);
+		font.draw(batch, "GAME OVER!", 300, 275);
+		font.draw(batch, "Toca en cualquier lado para reiniciar.", 150, 225);
 		batch.end();
 
 		if (Gdx.input.isTouched()) {

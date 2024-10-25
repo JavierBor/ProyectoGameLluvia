@@ -8,6 +8,7 @@ public class Rayo extends Elemento implements ElementoEfecto{
 
     public Rayo(float x, float y, float ancho, float alto) {
         super(x, y, ancho, alto, new Texture(Gdx.files.internal("rayo.png")));
+        
     }
 
     @Override

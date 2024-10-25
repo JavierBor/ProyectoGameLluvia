@@ -28,8 +28,14 @@ public class GameScreen implements Screen {
 		Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 		Sound powerSound = Gdx.audio.newSound(Gdx.files.internal("powerSound.mp3")); 
 		Sound vidaSound = Gdx.audio.newSound(Gdx.files.internal("vidaSound.mp3")); 
-		tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound, new Texture(Gdx.files.internal("bucketGold.png")), powerSound, vidaSound);
-         
+		//tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound, new Texture(Gdx.files.internal("bucketGold.png")), powerSound, vidaSound);
+		tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),
+                hurtSound, 
+                new Texture(Gdx.files.internal("bucketGold.png")),
+                new Texture(Gdx.files.internal("bucketSnow.png")), // Añadir bucketSnow
+                powerSound, 
+                vidaSound);
+ 
 
          
         Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav")); 

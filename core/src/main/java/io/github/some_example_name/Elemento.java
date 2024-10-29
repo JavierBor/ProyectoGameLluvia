@@ -12,7 +12,9 @@ public abstract class Elemento {
         this.area = new Rectangle(x, y, ancho, alto);
         this.textura = textura;
     }
-    
+    public Texture getTextura() {
+    	return textura;
+    }
     public Rectangle getArea() {
         return area;
     }
@@ -21,11 +23,8 @@ public abstract class Elemento {
     public void mover(float deltaTime) {
         area.y -= 300 * deltaTime;
     }
-
-    //Implementación común de dibujar para todos los elementos
-    public void dibujar(SpriteBatch batch) {
-        batch.draw(textura, area.x, area.y);
-    }
+    
+    public abstract void dibujar(SpriteBatch batch);
     
     public boolean fueraPantalla() {
     	return area.y + area.height < 0; //Verificar si salió de la pantalla

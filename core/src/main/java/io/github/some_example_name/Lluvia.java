@@ -52,7 +52,7 @@ public class Lluvia {
 			Elemento sol = new Sol(MathUtils.random(0, 800-64), 480, 64, 64);
 			elementosPos.add(sol);
 		}
-		else if (probabilidad <= 10) { //Probabilidad del 1%
+		else if (probabilidad <= 5) { //Probabilidad del 1%
 			Elemento nieve = new Nieve(MathUtils.random(0, 800-64), 480, 64, 64);
 			elementosPos.add(nieve);
 		}
@@ -122,4 +122,6 @@ public class Lluvia {
    public void continuar() {
 	  rainMusic.play();
    }
+   
+   
 }

@@ -32,10 +32,10 @@ public class Lluvia {
 	private void crearGotaDeLluvia() { 	
 		//Ver el tipo de gota (buena o mala)
 	    if (MathUtils.random(1, 10) < 4) {
-	    	GotaMala gotaMala = new GotaMala(MathUtils.random(0, 800-64), 480, 64, 64);
+	    	Elemento gotaMala = new GotaMala(MathUtils.random(0, 800-64), 480, 64, 64);
 	        elementosPos.add(gotaMala);
 	    } else {
-	    	GotaBuena gotaBuena = new GotaBuena(MathUtils.random(0, 800-64), 480, 64, 64);
+	    	Elemento gotaBuena = new GotaBuena(MathUtils.random(0, 800-64), 480, 64, 64);
 	        elementosPos.add(gotaBuena);
 	    }
 	    
@@ -45,15 +45,15 @@ public class Lluvia {
 	private void crearElemento() {
 		double probabilidad = MathUtils.random(0f, 100f);
 		if (probabilidad <= 1) { //Probabilidad del 1%
-			Rayo rayo = new Rayo(MathUtils.random(0, 800-64), 480, 64, 64);
+			Elemento rayo = new Rayo(MathUtils.random(0, 800-64), 480, 64, 64);
 			elementosPos.add(rayo);
 		}
 		else if (probabilidad > 1 && probabilidad <= 1.5) { //Probabilidad del 0,5%
-			Sol sol = new Sol(MathUtils.random(0, 800-64), 480, 64, 64);
+			Elemento sol = new Sol(MathUtils.random(0, 800-64), 480, 64, 64);
 			elementosPos.add(sol);
 		}
-		else if (probabilidad <= 5) { //Probabilidad del 1%
-			Nieve nieve = new Nieve(MathUtils.random(0, 800-64), 480, 64, 64);
+		else if (probabilidad <= 10) { //Probabilidad del 1%
+			Elemento nieve = new Nieve(MathUtils.random(0, 800-64), 480, 64, 64);
 			elementosPos.add(nieve);
 		}
 		else { //Resto de probabilidades (Gotas normales)

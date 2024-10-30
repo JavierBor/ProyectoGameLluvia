@@ -32,7 +32,7 @@ public class GameScreen implements Screen {
 		tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),
                 hurtSound, 
                 new Texture(Gdx.files.internal("bucketGold.png")),
-                new Texture(Gdx.files.internal("bucketSnow.png")), // Añadir bucketSnow
+                new Texture(Gdx.files.internal("bucketFroze.png")),
                 powerSound, 
                 vidaSound);
  

@@ -52,8 +52,8 @@ public class Lluvia {
 			Elemento sol = new Sol(MathUtils.random(0, 800-64), 480, 64, 64);
 			elementosPos.add(sol);
 		}
-		else if (probabilidad <= 5) { //Probabilidad del 1%
-			Elemento nieve = new Nieve(MathUtils.random(0, 800-64), 480, 64, 64);
+		else if (probabilidad > 1.5 && probabilidad <= 3.5) { //Probabilidad del 2%
+			Elemento nieve = new CopoNieve(MathUtils.randomBoolean() ? 0 : 800 - 64, 480, 64, 64);
 			elementosPos.add(nieve);
 		}
 		else { //Resto de probabilidades (Gotas normales)
@@ -91,11 +91,10 @@ public class Lluvia {
 		    			tarro.sumarPuntos(5);
 		    	    }
 		    		else
-		    		{
-		    		    
-		    			tarro.dañar(); // Dañar el tarro
-		    			if (tarro.getVidas() <= 0) return false; // GAMEOVER
-		    		    }
+		    		{		    		    
+		    			tarro.dañar(); //Dañar el tarro
+		    			if (tarro.getVidas() <= 0) return false; //GAMEOVER
+		    		}
 		    	
 		    	}
 		        elementosPos.removeIndex(i);

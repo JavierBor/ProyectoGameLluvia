@@ -22,10 +22,9 @@ public class Tarro {
 	   private int tiempoHeridoMax=50;
 	   private int tiempoHerido;
 	   private boolean inmunidad;
+	   private boolean congelado;
 	   private float tiempoInmunidad;
-	   private float velocidadOriginal;
-	   private float velocidadActual;
-	   private float tiempoRalentizacion; // Para 
+	   private float tiempoRalentizacion; 
 	   
 	   public Tarro(Texture tex, Sound ss, Texture gold, Texture snow, Sound power, Sound vidaMas) {
 		   bucketImage = tex;
@@ -33,10 +32,7 @@ public class Tarro {
 		   bucketGold = gold;
 		   bucketSnow = snow; 
 		   powerSound = power;
-		   vidaSound = vidaMas;
-	       this.velocidadOriginal = 500; // Velocidad base
-	       this.velocidadActual = velocidadOriginal; // Empieza sin efectos
-		   
+		   vidaSound = vidaMas;	   
 	   }
 	   
 		public int getVidas() {
@@ -49,23 +45,23 @@ public class Tarro {
 		public Rectangle getArea() {
 			return bucket;
 		}
+		
 		public void sumarPuntos(int pp) {
 			puntos+=pp;
 		}
 		
 	   public void crear() {
-		      bucket = new Rectangle();
-		      bucket.x = 800 / 2 - 64 / 2;
-		      bucket.y = 20;
-		      bucket.width = 64;
-		      bucket.height = 64;
+	        bucket = new Rectangle();
+	        bucket.x = 800 / 2 - 64 / 2;
+	        bucket.y = 20;
+	        bucket.width = 64;
+	        bucket.height = 64;
 	   }
 	   
 	   public void dañar() {
-		  if (inmunidad == true) return;
-		  
+		  if (inmunidad == true) return;		  
 		  vidas--;
-		  //herido = true;
+		  herido = true;
 		  tiempoHerido = tiempoHeridoMax;
 		  sonidoHerido.play();
 	   }
@@ -84,6 +80,12 @@ public class Tarro {
 	       inmunidad = true;
 	   }
 	   
+	   public void reducirVelocidad(float factor, float duracion) {
+		    congelado = true;
+		    velx *= factor;
+		    this.tiempoRalentizacion = Math.max(this.tiempoRalentizacion, duracion);
+	   }
+	   
 	   public void dibujar(SpriteBatch batch) {
 		   //Manejo de inmunidad
 	       if (inmunidad) {
@@ -93,54 +95,50 @@ public class Tarro {
 	               powerSound.stop();
 	           }
 	           batch.draw(bucketGold, bucket.x, bucket.y);
-	       }
-	        else if (tiempoRalentizacion > 0) {
-	            batch.draw(bucketSnow, bucket.x, bucket.y); // Mostrar el cubo de nieve
-	        } 
+	       }	       
 	       else {
-	    	   batch.setColor(1, 1, 1, 1); //Color normal (blanco)
-		 
-		       if (!herido)  
-		    	   batch.draw(bucketImage, bucket.x, bucket.y);
-		       else {
-		    	   batch.draw(bucketImage, bucket.x, bucket.y+ MathUtils.random(-5,5));
+	    	   if (!herido) {
+	    		   if (congelado) batch.draw(bucketSnow, bucket.x, bucket.y);
+	    		   else batch.draw(bucketImage, bucket.x, bucket.y);
+	    	   }
+		       else {	
+		    	   if (congelado) batch.draw(bucketSnow, bucket.x, bucket.y+ MathUtils.random(-5,5));
+		    	   else batch.draw(bucketImage, bucket.x, bucket.y+ MathUtils.random(-5,5));
 		    	   tiempoHerido--;
 		    	   if (tiempoHerido<=0) herido = false;
 		       }
-	       }
+	       }     
 	   } 
-	   public void reducirVelocidad(float factor, float duracion) {
-		    this.velocidadActual = velocidadOriginal * factor; // Reduce la velocidad
-		    this.tiempoRalentizacion = Math.max(this.tiempoRalentizacion, duracion); // Asegúrate de no acumular
-		}
-
 	   
-	   
-	    public void actualizarMovimiento() {
-	        // Controlamos la duración de la ralentización
+	   public void actualizarMovimiento() {
+	        //Controlamos la duración de la ralentización
 	        if (tiempoRalentizacion > 0) {
 	            tiempoRalentizacion -= Gdx.graphics.getDeltaTime();
-	            if (tiempoRalentizacion <= 0) {
-	                velocidadActual = velocidadOriginal; // Restauramos la velocidad
+	            if (tiempoRalentizacion <= 0 || inmunidad) {
+	            	congelado = false;
+	                velx = 500; //Restauramos la velocidad
 	            }
-
 	        }
 	        
-	        // Movimiento desde teclado usando la velocidad actual
-	        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) bucket.x -= velocidadActual * Gdx.graphics.getDeltaTime();
-	        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) bucket.x += velocidadActual * Gdx.graphics.getDeltaTime();
-	        if (Gdx.input.isKeyPressed(Input.Keys.UP)) bucket.y += velocidadActual * Gdx.graphics.getDeltaTime();
-	        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) bucket.y -= velocidadActual * Gdx.graphics.getDeltaTime();
+	        //Movimiento desde teclado usando la velocidad actual
+	        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) bucket.x -= velx * Gdx.graphics.getDeltaTime();
+	        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) bucket.x += velx * Gdx.graphics.getDeltaTime();
+	        if (Gdx.input.isKeyPressed(Input.Keys.UP)) bucket.y += velx * Gdx.graphics.getDeltaTime();
+	        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) bucket.y -= velx * Gdx.graphics.getDeltaTime();
 
-	        // Restricciones de movimiento (mantener dentro de la pantalla)
+	        //Restricciones de movimiento (mantener dentro de la pantalla)
 	        if (bucket.y < 0) bucket.y = 0;
 	        if (bucket.y > 480 - 64) bucket.y = 480 - 64;
 
-	        // Al salir por los lados
+	        //Al salir por los lados
 	        if (bucket.x < -64) bucket.x = 800;
 	        if (bucket.x > 800) bucket.x = -64;
-	    }
+	   }
 	      
+	   public boolean estaCongelado() {
+		   return congelado;
+	   }
+	   
 	   public boolean esInmune() {
 		   return inmunidad;
 	   }

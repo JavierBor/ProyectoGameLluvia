@@ -121,6 +121,30 @@ public class Lluvia {
    public void continuar() {
 	  rainMusic.play();
    }
-   
+   public void setDropSound(Sound dropSound)
+   {
+	   this.dropSound = dropSound;
+   }
+   public void setRainMusic(Music rainMusic)
+   {
+	   this.rainMusic = rainMusic;
+   }
+   public void setLastDropTime(long lastDropTime)
+   {
+	   this.lastDropTime = lastDropTime;
+   }
+   public long getLastDropTime()
+   {
+	   return lastDropTime;
+	   
+   }
+   public Sound getDropSound()
+   {
+	   return dropSound;
+   }
+   public Music getRainMusic( )
+   {
+	   return rainMusic;
+   }
    
 }

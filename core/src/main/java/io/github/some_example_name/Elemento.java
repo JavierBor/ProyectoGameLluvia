@@ -18,7 +18,12 @@ public abstract class Elemento {
     public Rectangle getArea() {
         return area;
     }
-
+    public void setArea(Rectangle area) {
+        this.area = area;
+    }
+    public void setTextura(Texture textura) {
+        this.textura = textura;
+    }
     //Implementación común de movimiento para todos los elementos
     public void mover(float deltaTime) {
         area.y -= 300 * deltaTime;
@@ -33,4 +38,5 @@ public abstract class Elemento {
 	public boolean colision(Tarro tarro) {
 		return area.overlaps(tarro.getArea()); //Verificar si chocó con el tarro
 	}
+	
 }

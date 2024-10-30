@@ -150,4 +150,135 @@ public class Tarro {
 	   public boolean estaHerido() {
 		   return herido;
 	   }
+	// Getters
+
+	   public Rectangle getBucket() {
+	       return bucket;
+	   }
+
+	   public Texture getBucketImage() {
+	       return bucketImage;
+	   }
+
+	   public Texture getBucketGold() {
+	       return bucketGold;
+	   }
+
+	   public Texture getBucketSnow() {
+	       return bucketSnow;
+	   }
+
+	   public Sound getSonidoHerido() {
+	       return sonidoHerido;
+	   }
+
+	   public Sound getPowerSound() {
+	       return powerSound;
+	   }
+
+	   public Sound getVidaSound() {
+	       return vidaSound;
+	   }
+
+	   public int getVelx() {
+	       return velx;
+	   }
+
+	   public boolean isHerido() {
+	       return herido;
+	   }
+
+	   public int getTiempoHeridoMax() {
+	       return tiempoHeridoMax;
+	   }
+
+	   public int getTiempoHerido() {
+	       return tiempoHerido;
+	   }
+
+	   public boolean isInmunidad() {
+	       return inmunidad;
+	   }
+
+	   public boolean isCongelado() {
+	       return congelado;
+	   }
+
+	   public float getTiempoInmunidad() {
+	       return tiempoInmunidad;
+	   }
+
+	   public float getTiempoRalentizacion() {
+	       return tiempoRalentizacion;
+	   }
+
+	   // Setters
+	   public void setVidas(int vidas) {
+	       this.vidas = vidas;
+	   }
+
+	   public void setPuntos(int puntos) {
+	       this.puntos = puntos;
+	   }
+
+	   public void setBucket(Rectangle bucket) {
+	       this.bucket = bucket;
+	   }
+
+	   public void setBucketImage(Texture bucketImage) {
+	       this.bucketImage = bucketImage;
+	   }
+
+	   public void setBucketGold(Texture bucketGold) {
+	       this.bucketGold = bucketGold;
+	   }
+
+	   public void setBucketSnow(Texture bucketSnow) {
+	       this.bucketSnow = bucketSnow;
+	   }
+
+	   public void setSonidoHerido(Sound sonidoHerido) {
+	       this.sonidoHerido = sonidoHerido;
+	   }
+
+	   public void setPowerSound(Sound powerSound) {
+	       this.powerSound = powerSound;
+	   }
+
+	   public void setVidaSound(Sound vidaSound) {
+	       this.vidaSound = vidaSound;
+	   }
+
+	   public void setVelx(int velx) {
+	       this.velx = velx;
+	   }
+
+	   public void setHerido(boolean herido) {
+	       this.herido = herido;
+	   }
+
+	   public void setTiempoHeridoMax(int tiempoHeridoMax) {
+	       this.tiempoHeridoMax = tiempoHeridoMax;
+	   }
+
+	   public void setTiempoHerido(int tiempoHerido) {
+	       this.tiempoHerido = tiempoHerido;
+	   }
+
+	   public void setInmunidad(boolean inmunidad) {
+	       this.inmunidad = inmunidad;
+	   }
+
+	   public void setCongelado(boolean congelado) {
+	       this.congelado = congelado;
+	   }
+
+	   public void setTiempoInmunidad(float tiempoInmunidad) {
+	       this.tiempoInmunidad = tiempoInmunidad;
+	   }
+
+	   public void setTiempoRalentizacion(float tiempoRalentizacion) {
+	       this.tiempoRalentizacion = tiempoRalentizacion;
+	   }
+
 }

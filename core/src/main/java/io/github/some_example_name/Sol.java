@@ -52,4 +52,28 @@ public class Sol extends Elemento{
             direccion = -1;
         }
     }
+    public void setDireccion(float direccion) {
+        this.direccion = direccion;
+    }
+
+    public void setLimiteIzquierda(float limiteIzquierda) {
+        this.limiteIzquierda = limiteIzquierda;
+    }
+
+    public void setLimiteDerecha(float limiteDerecha) {
+        this.limiteDerecha = limiteDerecha;
+    }
+
+    // Getters
+    public float getDireccion() {
+        return direccion;
+    }
+
+    public float getLimiteIzquierda() {
+        return limiteIzquierda;
+    }
+
+    public float getLimiteDerecha() {
+        return limiteDerecha;
+    }
 }

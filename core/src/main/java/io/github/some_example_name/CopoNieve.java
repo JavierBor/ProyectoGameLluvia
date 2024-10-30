@@ -52,4 +52,28 @@ public class CopoNieve extends Elemento implements ElementoEfecto {
     		breakingSound.setVolume(breakingSound.play(), 0.6f);
     	}
     }
+    public boolean getMoverDerecha() {
+        return moverDerecha;
+    }
+
+    public void setMoverDerecha(boolean moverDerecha) {
+        this.moverDerecha = moverDerecha;
+    }
+
+    public Sound getBreakingSound() {
+        return breakingSound;
+    }
+
+    public void setBreakingSound(Sound breakingSound) {
+        this.breakingSound = breakingSound;
+    }
+
+    public Sound getFreezingSound() {
+        return freezingSound;
+    }
+
+    public void setFreezingSound(Sound freezingSound) {
+        this.freezingSound = freezingSound;
+    }
+
 }

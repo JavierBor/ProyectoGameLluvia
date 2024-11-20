@@ -50,7 +50,7 @@ public class Lluvia {
 			Elemento rayo = factory.crearRayo();
 			elementosPos.add(rayo);
 		}
-		else if (probabilidad > 1 && probabilidad <= 32) { //Probabilidad del 0,5%
+		else if (probabilidad > 1 && probabilidad <= 1.5) { //Probabilidad del 0,5%
 			Elemento sol = factory.crearSol();
 			elementosPos.add(sol);
 		}

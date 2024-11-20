@@ -13,10 +13,12 @@ public class Lluvia {
     private long lastDropTime;
     private Sound dropSound;
     private Music rainMusic;
+    private AbstractFactory factory;
 	   
 	public Lluvia(Sound ss, Music mm) {
 		rainMusic = mm;
 		dropSound = ss;
+		factory = new ElementoFactory();
 	}
 	
 	public void crear() {
@@ -32,10 +34,10 @@ public class Lluvia {
 	private void crearGotaDeLluvia() { 	
 		//Ver el tipo de gota (buena o mala)
 	    if (MathUtils.random(1, 10) < 4) {
-	    	Elemento gotaMala = new GotaMala(MathUtils.random(0, 800-64), 480, 64, 64);
+	    	Elemento gotaMala = factory.crearGotaMala();
 	        elementosPos.add(gotaMala);
 	    } else {
-	    	Elemento gotaBuena = new GotaBuena(MathUtils.random(0, 800-64), 480, 64, 64);
+	    	Elemento gotaBuena = factory.crearGotaBuena();
 	        elementosPos.add(gotaBuena);
 	    }
 	    
@@ -45,15 +47,15 @@ public class Lluvia {
 	private void crearElemento() {
 		double probabilidad = MathUtils.random(0f, 100f);
 		if (probabilidad <= 1) { //Probabilidad del 1%
-			Elemento rayo = new Rayo(MathUtils.random(0, 800-64), 480, 64, 64);
+			Elemento rayo = factory.crearRayo();
 			elementosPos.add(rayo);
 		}
-		else if (probabilidad > 1 && probabilidad <= 1.5) { //Probabilidad del 0,5%
-			Elemento sol = new Sol(MathUtils.random(0, 800-64), 480, 64, 64);
+		else if (probabilidad > 1 && probabilidad <= 32) { //Probabilidad del 0,5%
+			Elemento sol = factory.crearSol();
 			elementosPos.add(sol);
 		}
 		else if (probabilidad > 1.5 && probabilidad <= 3.5) { //Probabilidad del 2%
-			Elemento nieve = new CopoNieve(MathUtils.randomBoolean() ? 0 : 800 - 64, 480, 64, 64);
+			Elemento nieve = factory.crearCopoNieve();
 			elementosPos.add(nieve);
 		}
 		else { //Resto de probabilidades (Gotas normales)

@@ -16,7 +16,7 @@ public class Tarro {
 	   private Sound powerSound;
 	   private Sound vidaSound;
 	   private int vidas = 3;
-	   private int puntos = 0;
+	   //private int puntos = 0;
 	   private int velx = 500;
 	   private boolean herido = false;
 	   private int tiempoHeridoMax=30;
@@ -38,18 +38,23 @@ public class Tarro {
 		public int getVidas() {
 			return vidas;
 		}
-	
+	/*
 		public int getPuntos() {
 			return puntos;
-		}
+		} 
+		*/
 		public Rectangle getArea() {
 			return bucket;
 		}
-		
+		/*/
 		public void sumarPuntos(int pp) {
 			puntos+=pp;
 		}
-		
+		*/
+       public void sumarPuntos(int pp) {
+		    ScoreManager.getInstance().sumarPuntos(pp); // Usamos el Singleton
+		}
+
 	   public void crear() {
 	        bucket = new Rectangle();
 	        bucket.x = 800 / 2 - 64 / 2;
@@ -67,13 +72,13 @@ public class Tarro {
 	   }
 	   
 	   public void aumentarVida() {
-		   puntos+=100;
+		   ScoreManager.getInstance().sumarPuntos(100);
 		   vidaSound.play();
 		   vidas++;
 	   }
 	   
 	   public void otorgarInmunidad(float segundos) {	 
-		   puntos+=25;
+		   ScoreManager.getInstance().sumarPuntos(25);
 	       tiempoInmunidad = segundos;
 	       powerSound.stop(); //Evitamos que se acumulen
 	       powerSound.play();
@@ -216,11 +221,11 @@ public class Tarro {
 	   public void setVidas(int vidas) {
 	       this.vidas = vidas;
 	   }
-
+/*
 	   public void setPuntos(int puntos) {
 	       this.puntos = puntos;
 	   }
-
+*/
 	   public void setBucket(Rectangle bucket) {
 	       this.bucket = bucket;
 	   }

@@ -85,12 +85,12 @@ public class Lluvia {
 		    		tarro.aumentarVida();
 		    	}
 		    	if (elemento instanceof GotaBuena) {
-		    		tarro.sumarPuntos(10);
+		    		ScoreManager.getInstance().sumarPuntos(10);
 		            dropSound.setVolume(dropSound.play(), 0.5f);
 		    	}
 		    	if (elemento instanceof GotaMala) {		    		
 		    		if (tarro.esInmune()) { //En caso de estar con efecto Rayo
-		    			tarro.sumarPuntos(5);
+		    			ScoreManager.getInstance().sumarPuntos(10);
 		    	    }
 		    		else
 		    		{		    		    

@@ -59,7 +59,7 @@ public class Sol extends Elemento{
     public void setLimiteIzquierda(float limiteIzquierda) {
         this.limiteIzquierda = limiteIzquierda;
     }
-
+ 
     public void setLimiteDerecha(float limiteDerecha) {
         this.limiteDerecha = limiteDerecha;
     }
